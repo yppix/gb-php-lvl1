@@ -1,22 +1,30 @@
 <?php
-define('__ROOT__', dirname(dirname(__FILE__)));
-
-require_once(__ROOT__ . '\gb-php-lvl1\main-help.php');
 
 class Task
 {
-    private string   $description;
-    private DateTime $dateCreated;
-    private DateTime $dateUpdated;
-    private DateTime $dateDone;
-    private int      $priority;
-    private bool     $isDone;
-    private User     $user;
-    private array    $comments = [];
+    //private string   $description;
+    //private DateTime $dateCreated;
+    //private DateTime $dateUpdated;
+    //private DateTime $dateDone;
+    //private int      $priority;
+    //private ?bool     $isDone;
+    //private User     $user;
+    //private ?array    $comments = [];
 
-    public function __construct(string $description)
+    private $description;
+    private $dateCreated;
+    private $dateUpdated;
+    private $dateDone;
+    private $priority;
+    private  $isDone;
+    private $user;
+    private $comments = [];
+
+    public function __construct(string $description, int $priority, User $user)
     {
         $this->description = $description;
+        $this->priority    = $priority;
+        $this->user        = $user;
         $this->dateCreated = new DateTime();
         $this->dateUpdated = new DateTime();
     }
@@ -26,7 +34,7 @@ class Task
         return $this->description;
     }
 
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->setDateUpdated();
@@ -37,9 +45,9 @@ class Task
         return $this->comments;
     }
 
-    public function setComments(array $text)
+    public function setComments(Comment $comment): void
     {
-        $this->comments = $text;
+        $this->comments[] = $comment;
         $this->setDateUpdated();
     }
 
@@ -48,7 +56,7 @@ class Task
         return $this->priority;
     }
 
-    public function setPriority(int $priority)
+    public function setPriority(int $priority): void
     {
         $this->priority = $priority;
         $this->setDateUpdated();
